@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
             session[:user_id] = user.id
             render json: user
         else
-            render json: {errors: user.errors.full_messages}, status: 400
+            render json: {error: user.errors.full_messages}, status: 400
         end
     end
 

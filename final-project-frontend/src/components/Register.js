@@ -20,7 +20,8 @@ const Register = props => {
             body: JSON.stringify({username: username, password: password})
         })
         .then(res => res.json())
-        .then(user => props.handleLogin(user))
+        .then(user => {
+            props.handleLogin(user)})
     }
     
     return (

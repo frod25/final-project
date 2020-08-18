@@ -55,8 +55,13 @@ const MainPage = props => {
     }
     
     const handleLogin = (user) => {
-        setCurrentUser(user)
-        props.history.push(`/`)
+        if(!user.error) {
+            setCurrentUser(user)
+            props.history.push(`/`)
+        } else {
+            alert(user.error)
+            props.history.push(`/`)
+        }
     }
     
     const handleLogout = () => {
