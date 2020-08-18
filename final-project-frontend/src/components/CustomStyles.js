@@ -73,11 +73,10 @@ export const CardBox = styled.div`
     background-color: ${white};
     border: none;
     border-radius: 3px;
-    margin: 1em;
+    margin: 1em auto 1em auto;
     padding: 0.2em 1em;
-    float: left;
     height: auto;
-    width: auto;
+    width: 90%;
 
     a {
         color: ${orangeWeb};
@@ -195,9 +194,30 @@ export const UserEditForm = styled.form`
         text-align: center;
     }
 `
-export const DeleteUser = styled(Button)`
-    float: right;
+export const DeleteButton = styled(Button)`
     background-color: red;
     color: ${white};
     border: 2px solid red;
+`
+export const CommentForm = styled(UserEditForm)`
+    position: relative;
+    width: 90%;
+    margin: 1em auto 1em auto;
+
+    input {
+        width: 100%;
+    }
+`
+export const EditPostForm = styled(UserEditForm)`
+    position: relative;
+    width: 90%;
+    margin: 1em auto 1em auto;
+
+    label {
+        width: 100%;
+    }
+
+    input {
+        width: 100%;
+    }
 `

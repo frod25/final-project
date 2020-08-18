@@ -7,14 +7,16 @@ class LikesController < ApplicationController
         )
         if like
             like.destroy
-            render json: {msg: "Unliked!"}
+            post = Post.find_by(id: params[:postId])
+            render json: post
         else
             like = Like.create(
                 post_id: params[:postId],
                 user_id: @current_user.id
             )
             if like.valid?
-                render json: like
+                post = Post.find_by(id: like.post.id)
+                render json: post
             else
                 render json: {error: like.error.full_messages}
             end

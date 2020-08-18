@@ -13,7 +13,7 @@ class PostsController < ApplicationController
         if post
             render json: post
         else
-            render json: {errors: "Post not found!"}
+            render json: {error: "Post not found!"}
         end
     end
     
@@ -31,11 +31,19 @@ class PostsController < ApplicationController
     end
 
     def update
-        
+        post = Post.find_by(id: params[:id])
+        if post
+            post.update(title: params[:title], body: params[:body])
+            render json: post
+        else
+            render json: {error: "Post Not Found!"}
+        end
     end
 
     def destroy
-        
+        post = Post.find_by(id: params[:id])
+        post.destroy
+        render json: {msg: "Post Deleted!"}
     end
 
     private

@@ -14,15 +14,30 @@ const PostContainer = props => {
                 }
             }
             return (
-                <PostCard key={post.id} post={post} currentUser={props.currentUser} alreadyLiked={liked}/>
+                <PostCard 
+                    key={post.id} 
+                    post={post} 
+                    currentUser={props.currentUser} 
+                    alreadyLiked={liked} 
+                    updatePost={props.updatePost}
+                    removePost={props.removePost}
+                />
             )
         })
     }
-    
+
+    const loadingPosts = () => {
+        if(props.posts.length > 0) {
+            return renderPosts()
+        } else {
+            return <h1>Loading Posts...</h1>
+        }
+    }
+
     return (
         <MainSection>
             <h1>Posts</h1>
-            {renderPosts()}
+            {loadingPosts()}
         </MainSection>
     )
 }

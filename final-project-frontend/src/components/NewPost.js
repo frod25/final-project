@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {StyledForm, Button} from './CustomStyles'
+import {MainSection, CardBox, EditPostForm, Button} from './CustomStyles'
 
 const NewPost = props => {
     const [post, setPost] = useState({})
@@ -25,14 +25,16 @@ const NewPost = props => {
     }
 
     return (
-        <div>
-            <StyledForm onSubmit={handleSubmit}>
-                <h1>Create a New Post</h1>
-                <input type="text" name="title" placeholder="Title" onChange={handleStateChange}/>
-                <input type="text-area" name="body" placeholder="Contents" onChange={handleStateChange}/>
-                <Button primary={true} type="submit">Post</Button>
-            </StyledForm>
-        </div>    
+        <MainSection>    
+            <CardBox>
+                <EditPostForm onSubmit={handleSubmit}>
+                    <h1>Create a New Post</h1>
+                    <input type="text" name="title" placeholder="Title" onChange={handleStateChange}/>
+                    <input type="text-area" name="body" placeholder="Contents" onChange={handleStateChange}/>
+                    <Button primary={true} type="submit">Post</Button>
+                </EditPostForm>
+            </CardBox> 
+        </MainSection>   
     )
 }
 

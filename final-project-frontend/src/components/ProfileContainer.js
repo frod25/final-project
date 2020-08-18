@@ -16,10 +16,11 @@ const ProfileContainer = props => {
             fetch(`http://localhost:3001/users/${id}`)
             .then(r => r.json())
             .then(userObj => {
-                if(!userObj.errors){
+                if(!userObj.errors) {
                     setUser(userObj)
                     setUserLoaded(true)
                 } else {
+                    console.log("user not loaded")
                     setUserLoaded(false)
                     setUser({})
                 }

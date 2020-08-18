@@ -10,21 +10,32 @@ import NewPost from './NewPost'
 const MainPage = props => {
     const [currentUser, setCurrentUser] = useState(null)
     const [posts, setPosts] = useState([])
-    const [postAdded, setPostAdded] = useState(false)
     
     const fetchPosts = () => {
+        let reversedPosts = []
         return fetch('http://localhost:3001/posts', {
             credentials: "include"
         })
         .then(res => res.json())
-        .then(postArray => setPosts(postArray))
+        .then(postArray => {
+            reversedPosts = [...postArray].reverse()
+            setPosts(reversedPosts)
+        })
+    }
+
+    const updatePost = (updatedPost) => {
+        const newPostArray = posts.map(post => post.id === updatedPost.id ? updatedPost : post)
+        setPosts(newPostArray)
+    }
+
+    const removePost = (deletedPost) => {
+        const newPostArray = posts.filter(post => post.id !== deletedPost.id)
+        setPosts(newPostArray)
     }
 
     const renderNewPost = (newPost) => {
-        setPosts(prevPosts => {
-            return [...prevPosts, newPost]
-        })
-        setPostAdded(true)
+        setPosts(prevPosts => [newPost, ...prevPosts])
+        props.history.push(`/`)
     }
     
     const autoLogin = () => {
@@ -56,7 +67,7 @@ const MainPage = props => {
         .then((msg) => {
             console.log(msg)
             setCurrentUser(null)
-            props.history.push('/login')
+            props.history.push(`/`)
         })
       }
     
@@ -78,7 +89,11 @@ const MainPage = props => {
     
     const updateCurrentUser = (updatedUser) => {
         setCurrentUser(updatedUser)
-        props.history.push(`/user/${updatedUser.id}`)
+        if(updatedUser === null) {
+            props.history.push(`/`)
+        } else {
+            props.history.push(`/user/${updatedUser.id}`)
+        }
     }
     
     useEffect(() => {
@@ -88,9 +103,8 @@ const MainPage = props => {
           fetchPosts()
         }
         mounted = false
-        setPostAdded(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [postAdded])
+    }, [])
 
     return (
         <>
@@ -114,7 +128,12 @@ const MainPage = props => {
                 <NewPost renderNewPost={renderNewPost}/>
             </Route>
             <Route path="/">
-                <PostContainer posts={posts} currentUser={currentUser}/>
+                <PostContainer 
+                    posts={posts} 
+                    currentUser={currentUser} 
+                    updatePost={updatePost}
+                    removePost={removePost}
+                />
             </Route>
         </Switch>
         </>

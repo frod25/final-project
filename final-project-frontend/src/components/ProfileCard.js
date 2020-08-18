@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import {Button, CardBox, ProfileImage, UserEditForm, DeleteUser} from './CustomStyles'
+import {Button, CardBox, ProfileImage, UserEditForm, DeleteButton} from './CustomStyles'
+import styled from 'styled-components'
 
 const ProfileCard = props => {
     
@@ -34,6 +35,20 @@ const ProfileCard = props => {
         .then(res => res.json())
         .then(updatedUser => {
             props.updateCurrentUser(updatedUser)
+            alert("Your changes have been saved!")
+        })
+    }
+
+    const handleDeleteUser = () => {
+        fetch(`http://localhost:3001/users/${user.id}`, {
+            credentials: "include",
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(res => res.json())
+        .then(response => {
+            console.log(response)
+            props.updateCurrentUser(null)
         })
     }
 
@@ -81,6 +96,7 @@ const ProfileCard = props => {
             if (props.currentUser.id === user.id) {
                 return (
                     <CardBox>
+                        <DeleteUser onClick={handleDeleteUser} primary={true}>Delete Account</DeleteUser>
                         <ProfileImage src={renderImg()} alt="profileImage"/>
                         <h1>{user.username}'s Profile</h1>
                         <UserEditForm onSubmit={handleSaveChanges}>
@@ -92,7 +108,6 @@ const ProfileCard = props => {
                             <input type="text" name="img" value={user.img} onChange={handleInput}/>
                             <Button primary={true} type="submit">Save Changes</Button>
                         </UserEditForm>
-                        <DeleteUser primary={true}>Delete Account</DeleteUser>
                     </CardBox>
                 )
             } else {
@@ -105,6 +120,15 @@ const ProfileCard = props => {
                     </CardBox>
                 )
             }
+        } else {
+            return (
+                <CardBox>
+                    <ProfileImage src={renderImg()} alt="profileImage"/>
+                    <h1>{user.username}'s Profile</h1>
+                    <h2>Username: {user.username}</h2>
+                    <h2>Location: {user.location}</h2>
+                </CardBox>
+            )
         }
     }
 
@@ -132,3 +156,9 @@ const ProfileCard = props => {
 }
 
 export default ProfileCard
+
+const DeleteUser = styled(DeleteButton)`
+    float: right;
+    
+
+`
