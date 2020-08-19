@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :messages, only: [:create, :show, :update, :destroy]
-  resources :comments, only: [:create, :index, :show, :update, :destroy]
+  resources :comments, only: [:create, :index, :update, :destroy]
   resources :posts, only: [:create, :index, :show, :update, :destroy]
   resources :users, only: [:show, :update, :destroy]
 
