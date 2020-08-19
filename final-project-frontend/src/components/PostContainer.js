@@ -14,13 +14,11 @@ const PostContainer = props => {
                 }
             }
             return (
-                <PostCard 
+                <PostCard
+                    {...props} 
                     key={post.id} 
                     post={post} 
-                    currentUser={props.currentUser} 
                     alreadyLiked={liked} 
-                    updatePost={props.updatePost}
-                    removePost={props.removePost}
                 />
             )
         })

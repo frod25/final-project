@@ -7,34 +7,35 @@ const ProfileContainer = props => {
 
     const [user, setUser] = useState({})
     const [userLoaded, setUserLoaded] = useState(false)
-    // const [followToggle, setFollowToggle] = useState(null)
+    
+    const updateUser = (updatedUser) => {
+        setUser(updatedUser)
+    }
+
+    const fetchUser = (id) => {
+        return fetch(`http://localhost:3001/users/${id}`)
+        .then(r => r.json())
+        .then(userObj => {
+            if(!userObj.errors) {
+                setUser(userObj)
+                setUserLoaded(true)
+            } else {
+                console.log("user not loaded")
+                setUserLoaded(false)
+                setUser({})
+            }
+        })
+    }
 
     useEffect(() => {
         let mounted = true
-        const id = props.match.params.id
         if(mounted) {
-            fetch(`http://localhost:3001/users/${id}`)
-            .then(r => r.json())
-            .then(userObj => {
-                if(!userObj.errors) {
-                    setUser(userObj)
-                    setUserLoaded(true)
-                } else {
-                    console.log("user not loaded")
-                    setUserLoaded(false)
-                    setUser({})
-                }
-            })
+            const id = props.match.params.id
+            fetchUser(id)
         }
-        mounted = false
+        return () => mounted = false
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    const renderFollowerCard = () => {
-        if (props.currentUser) {
-            return <FollowerCard {...props}/>
-        }
-    }
+    }, [userLoaded])
     
     return (
         <MainSection>
@@ -43,7 +44,13 @@ const ProfileContainer = props => {
                 user={user}
                 userLoaded={userLoaded}
             />
-            {renderFollowerCard()}
+            <FollowerCard 
+                currentUser={props.currentUser}
+                user={user}
+                userLoaded={userLoaded}
+                updateUser={updateUser}
+                fetchUser={fetchUser}
+            />
         </MainSection>
     )
 }

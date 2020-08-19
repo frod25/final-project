@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :location, :img
+  attributes :id, :username, :location, :img, :followers, :following
 
   has_many :posts, dependent: :destroy
   has_many :likes, dependent: :destroy

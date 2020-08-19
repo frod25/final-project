@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Button, CardBox, ProfileImage, UserEditForm, DeleteButton} from './CustomStyles'
-import styled from 'styled-components'
+import {Button, CardBox, ProfileImage, UserEditForm, DeleteUserButton, ProfileCardBox} from './CustomStyles'
 
 const ProfileCard = props => {
     
@@ -40,48 +39,19 @@ const ProfileCard = props => {
     }
 
     const handleDeleteUser = () => {
-        fetch(`http://localhost:3001/users/${user.id}`, {
-            credentials: "include",
-            method: "DELETE",
-            headers: {"Content-Type": "application/json"}
-        })
-        .then(res => res.json())
-        .then(response => {
-            console.log(response)
-            props.updateCurrentUser(null)
-        })
+        if(window.confirm("Are you sure?")) {
+            fetch(`http://localhost:3001/users/${user.id}`, {
+                credentials: "include",
+                method: "DELETE",
+                headers: {"Content-Type": "application/json"}
+            })
+            .then(res => res.json())
+            .then(response => {
+                console.log(response)
+                props.updateCurrentUser(null)
+                alert("Your account has been deleted!")
+        })}
     }
-
-    // const followerCount = () => {
-    //     if(user.followers.length === 1) {
-    //         return `1 Follower`
-    //     } else if (user.followers.length < 1) {
-    //          return `0 Followers`
-    //     } else {
-    //         return `${user.followers.length} Followers`
-    //     }
-    // }
-
-    // const handleClick = (e, followingId) => {
-    //     if(e.target.innerHTML === "Follow") {
-    //         props.handleFollow(followingId, "follow")
-    //         e.target.innerHTML = "Unfollow"
-    //         setFollowToggle(true)
-    //     } else {
-    //         props.handleFollow(followingId, "unfollow")
-    //         e.target.innerHTML = "Follow"
-    //         setFollowToggle(false)
-    //     }
-    // }
-
-    // const renderFollowButton = () => {
-    //     if (props.currentUser) {
-    //         let following = user.followers.filter(follower => {
-    //                 return follower.id === props.currentUser.id
-    //             })
-    //         return following.length > 0 ? <button onClick={(event) => {handleClick(event, user.id)}}>Unfollow</button> : <button onClick={(event) => {handleClick(event, user.id)}}>Follow</button>
-    //     }
-    // }
 
     const renderImg = () => {
         if(user.img) {
@@ -96,7 +66,6 @@ const ProfileCard = props => {
             if (props.currentUser.id === user.id) {
                 return (
                     <CardBox>
-                        <DeleteUser onClick={handleDeleteUser} primary={true}>Delete Account</DeleteUser>
                         <ProfileImage src={renderImg()} alt="profileImage"/>
                         <h1>{user.username}'s Profile</h1>
                         <UserEditForm onSubmit={handleSaveChanges}>
@@ -108,26 +77,27 @@ const ProfileCard = props => {
                             <input type="text" name="img" value={user.img} onChange={handleInput}/>
                             <Button primary={true} type="submit">Save Changes</Button>
                         </UserEditForm>
+                        <DeleteUserButton onClick={handleDeleteUser} primary={true}>Delete Account</DeleteUserButton>
                     </CardBox>
                 )
             } else {
                 return (
-                    <CardBox>
+                    <ProfileCardBox>
                         <ProfileImage src={renderImg()} alt="profileImage"/>
                         <h1>{user.username}'s Profile</h1>
-                        <h2>Username: {user.username}</h2>
-                        <h2>Location: {user.location}</h2>
-                    </CardBox>
+                        <h3>Username: </h3> <p>{user.username}</p>
+                        <h3>Location: </h3> <p>{user.location}</p>
+                    </ProfileCardBox>
                 )
             }
         } else {
             return (
-                <CardBox>
+                <ProfileCardBox>
                     <ProfileImage src={renderImg()} alt="profileImage"/>
                     <h1>{user.username}'s Profile</h1>
-                    <h2>Username: {user.username}</h2>
-                    <h2>Location: {user.location}</h2>
-                </CardBox>
+                    <h3>Username: </h3> <p>{user.username}</p>
+                    <h3>Location: </h3> <p>{user.location}</p>
+                </ProfileCardBox>
             )
         }
     }
@@ -148,17 +118,7 @@ const ProfileCard = props => {
         }
     }
 
-    return (
-        <div>
-            {renderPage()}
-        </div>
-    )
+    return (renderPage())
 }
 
 export default ProfileCard
-
-const DeleteUser = styled(DeleteButton)`
-    float: right;
-    
-
-`

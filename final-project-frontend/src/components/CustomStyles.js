@@ -141,10 +141,11 @@ export const StyledForm = styled.form`
     }
 `
 export const ProfileImage = styled.img`
-    border: 1px solid #ddd;
+    border: 1px solid ${orangeWeb};
     border-radius: 4px;
     padding: 5px;
-    width: 150px;
+    width: 25%;
+    height: 25%;
     display:block;
     margin: auto;
 `
@@ -153,7 +154,8 @@ export const UserEditForm = styled.form`
     color: ${oxfordBlue};
     text-align: center;
     padding: 1em;
-    width: 500px;
+    width: 85%;
+    margin: 1em auto;
     border-radius: 3px;
 
     h1 {
@@ -220,4 +222,74 @@ export const EditPostForm = styled(UserEditForm)`
     input {
         width: 100%;
     }
+`
+export const DeleteUserButton = styled(DeleteButton)`
+    margin-left: 38%;
+    margin-right: 38%;
+`
+export const FollowerCardBox = styled(CardBox)`
+    display:flex
+`
+export const FollowDiv = styled.div`
+    flex: 1;
+    position: relative;
+    width: 100%
+    height: auto;
+    margin: 1em 1em;
+    border: 2px solid #fca311ff;
+    text-align: center;
+    color: #fca311ff;
+`
+export const FollowButton = styled(Button)`
+    display: block;
+    position: relative;
+    margin-top: 1em;
+    height: 5em;
+    width: 6em;
+`
+export const LikeButton = styled(Button)`
+    border: none;
+    float: right;
+    font-size: 1.5em;
+    margin-top: 0;
+    padding-top: 0;
+    
+    &:hover {
+        background-color: Transparent;
+        color: #14213dff;
+    }
+
+    &:focus {
+        outline: none;
+        background-color: Transparent;
+    }
+`
+export const LikeLabel = styled.p`
+    float: right;
+    margin: 0.5em -1.5em;
+    font-weight: bold;
+    color: #fca311ff;
+`
+
+export const CommentButton = styled(Button)`
+    padding: 0.5em;
+`
+export const EditButton = styled(Button)`
+    padding: 0.5em;
+`
+export const CommentDeleteButton = styled(DeleteButton)`
+    padding: 0.2em 0.2em 0.2em 0.2em;
+    height: 2%;
+    width: auto;
+    margin-left: 0.5em;
+    text-align: center;
+    background: transparent;
+    color: red;
+    border: none;
+`
+export const ProfileCardBox = styled(CardBox)`
+    text-align: center;
+`
+export const FollowerButton = styled.button`
+    color: ${orangeWeb}
 `

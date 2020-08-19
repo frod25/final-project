@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {Button, CardBox, CommentForm, DeleteButton, EditPostForm} from './CustomStyles'
-import styled from 'styled-components'
+import {Button, CardBox, CommentForm, DeleteButton, EditPostForm, LikeButton, LikeLabel, CommentButton, CommentDeleteButton, EditButton} from './CustomStyles'
 import { NavLink } from 'react-router-dom'
 
 const PostCard = props => {
@@ -247,44 +246,3 @@ const PostCard = props => {
 }
 
 export default PostCard
-
-const LikeButton = styled(Button)`
-    border: none;
-    float: right;
-    font-size: 1.5em;
-    margin-top: 0;
-    padding-top: 0;
-    
-    &:hover {
-        background-color: Transparent;
-        color: #14213dff;
-    }
-
-    &:focus {
-        outline: none;
-        background-color: Transparent;
-    }
-`
-const LikeLabel = styled.p`
-    float: right;
-    margin: 0.5em -1.5em;
-    font-weight: bold;
-    color: #fca311ff;
-`
-
-const CommentButton = styled(Button)`
-    padding: 0.5em;
-`
-const EditButton = styled(Button)`
-    padding: 0.5em;
-`
-const CommentDeleteButton = styled(DeleteButton)`
-    padding: 0.2em 0.2em 0.2em 0.2em;
-    height: 2%;
-    width: auto;
-    margin-left: 0.5em;
-    text-align: center;
-    background: transparent;
-    color: red;
-    border: none;
-`
