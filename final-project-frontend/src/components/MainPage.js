@@ -95,6 +95,7 @@ const MainPage = props => {
     const updateCurrentUser = (updatedUser) => {
         setCurrentUser(updatedUser)
         if(updatedUser === null) {
+            fetchPosts()
             props.history.push(`/`)
         } else {
             props.history.push(`/user/${updatedUser.id}`)
